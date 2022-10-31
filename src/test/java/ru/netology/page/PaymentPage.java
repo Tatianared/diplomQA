@@ -8,6 +8,7 @@ import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
+
 public class PaymentPage {
     private SelenideElement heading = $$(".heading").find(Condition.exactText("Купить"));
     private SelenideElement cardNumberField = $("[placeholder='0000 0000 0000 0000']");
@@ -20,16 +21,17 @@ public class PaymentPage {
     private SelenideElement errorNotification = $(withText("Ошибка! Банк отказал в проведении операции."));
 
 
-    public void putCardData(String cardNumber, String month, String year, String owner, String cvc) {
-        cardNumberField.setValue(cardNumber);
-        monthField.setValue(month);
-        yearField.setValue(year);
-        ownerField.setValue(owner);
-        cvcField.setValue(cvc);
+    public void putCardData(DataHelper.Card card) {
+        cardNumberField.setValue(card.getCardNumber());
+        monthField.setValue(card.getMonth());
+        yearField.setValue(card.getYear());
+        ownerField.setValue(card.getOwner());
+        cvcField.setValue(card.getCvc());
         continueButton.click();
     }
 
 
-
+    public void putCardData(String cardNumber, String month, String year, String owner, String cvc) {
+    }
 }
 

@@ -43,10 +43,11 @@ public class PayTest {
         val cardNumber = DataHelper.getApprovedCardNumber();
         val month = DataHelper.getMonth;
         val year = DataHelper.getYear;
-        val owner = DataHelper.getRandomOwner();
-        val cvc = DataHelper.getRandomCVC();
+        val owner = DataHelper.getOwner;
+        val cvc = DataHelper.getCVC;
         paymentPage.putCardData(cardNumber, month, year, owner, cvc);
-        DataHelper.getApprovedCardStatus();
-
+       DataHelper.getApprovedCardStatus();
     }
 }
+
+
