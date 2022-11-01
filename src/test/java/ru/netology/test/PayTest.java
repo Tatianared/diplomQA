@@ -11,10 +11,7 @@ import ru.netology.data.DataHelper;
 import ru.netology.page.PaymentPage;
 import ru.netology.page.StartPage;
 
-import java.time.Duration;
-
 import static com.codeborne.selenide.Selenide.open;
-import static java.time.Duration.ofSeconds;
 
 public class PayTest {
     StartPage startPage = new StartPage();
@@ -25,6 +22,7 @@ public class PayTest {
     void setUp() {
         open("http://localhost:8080");
     }
+
     @BeforeAll
     static void setUpAll() {
         SelenideLogger.addListener("allure", new AllureSelenide());
@@ -38,16 +36,31 @@ public class PayTest {
 
 
     @Test
-    void shouldBuyTourWithDebetApprovedCard() {
+    void shouldBuyTourWithApprovedCard() {
         startPage.openPaymentPage();
-        val cardNumber = DataHelper.getApprovedCardNumber();
-        val month = DataHelper.getMonth;
-        val year = DataHelper.getYear;
-        val owner = DataHelper.getOwner;
-        val cvc = DataHelper.getCVC;
-        paymentPage.putCardData(cardNumber, month, year, owner, cvc);
-       DataHelper.getApprovedCardStatus();
+        val user = DataHelper.getApprovedUser();
+        paymentPage.putCardData(user);
+        paymentPage.getSuccessNotification();
     }
+
+    @Test
+    void shouldBuyTourWithDeclinedCard(){
+        startPage.openPaymentPage();
+        val user = DataHelper.getDeclinedUser();
+        paymentPage.putCardData(user);
+        paymentPage.getErrorNotification();
+    }
+
+    @Test
+    void shouldBuyTourWithRandomCard(){
+        startPage.openPaymentPage();
+        val card = DataHelper.getRandomNumber();
+        paymentPage.putCardData(card);
+        paymentPage.getErrorNotification();
+    }
+
+
+
 }
 
 
